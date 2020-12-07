@@ -201,7 +201,7 @@ def plotSame(name,graphs,colors,styles, plotCaloJet=False, plotPFJet=False, plot
         # pfJetText3   = getText("HLT PUPPI Jets"+" TRKv6p1+TICL",xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kGreen+2)
         # pfJetText3.Draw("same")
         yStart = yStart - 0.04
-        pfJetText6   = getText("HLT PUPPI Jets"+" TRKv7p2",xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlue+1)
+        pfJetText6   = getText("HLT PUPPI Jets"+" TRKv7p2",xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlue+2)
         pfJetText6.Draw("same")
         # yStart = yStart - 0.04
         # pfJetText8   = getText("HLT PUPPI Jets"+" TRKv7p2+TICL",xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kOrange+1)
@@ -209,30 +209,41 @@ def plotSame(name,graphs,colors,styles, plotCaloJet=False, plotPFJet=False, plot
         yStart = yStart - 0.04
         pfJetText7   = getText("(+TICL) dotted",xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
         pfJetText7.Draw("same")
+        yStart = yStart - 0.04
+        pfJetText8   = getText("(+TICLV2) dashDotted",xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
+        pfJetText8.Draw("same")
 
     yStart = 0.25
     xStart = 0.6
     if rocType == "Rej":
         xStart = 0.2
 
+    textEtaRegion = ""
+    if "_eta1" in name:
+        textEtaRegion = " (|#eta|<1.5)"
+    if "_eta2" in name:
+        textEtaRegion = " (1.5<|#eta|<3)"
+    if "_eta3" in name:
+        textEtaRegion = " (|#eta|>3)"
+
     if plotDeepCSV:
         if plotCSV:
-            deepCSVText   = getText("DeepCSV (solid)  ",xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
+            deepCSVText   = getText("DeepCSV (solid)"+textEtaRegion,xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
         else:
-            deepCSVText   = getText("DeepCSV",xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
+            deepCSVText   = getText("DeepCSV"+textEtaRegion,xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
         deepCSVText.Draw("same")
         yStart = yStart - 0.04
     if plotDeepJet:
 
-        deepJetText   = getText("DeepJet",xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
+        deepJetText   = getText("DeepJet"+textEtaRegion,xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
         deepJetText.Draw("same")
         yStart = yStart - 0.04
 
     if plotCSV:
         if plotDeepCSV:
-            CSVText   = getText("CSV      (dashed)  ",xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
+            CSVText   = getText("CSV      (dashDotted)"+textEtaRegion,xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
         else:
-            CSVText   = getText("CSV",xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
+            CSVText   = getText("CSV"+textEtaRegion,xStart=xStart,yStart=yStart,size=0.03,color=ROOT.kBlack)
         CSVText.Draw("same")
 
     #offJetTextDeep.Draw("same")
@@ -244,29 +255,31 @@ def plotSame(name,graphs,colors,styles, plotCaloJet=False, plotPFJet=False, plot
 #
 #
 #
-def main():
+def main(etaRegion=""):
 
-    off_deepcsv_roc   = makeRocPlot("Offline_PUPPI_deepcsv", "DeepCSV_l", bkg="matchedPuppi_L",sig="matchedPuppi_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV0_default.root")
+    off_deepcsv_roc   = makeRocPlot("Offline_PUPPI_deepcsv0"+etaRegion, "DeepCSV_l", bkg="matchedPuppi_L"+etaRegion,sig="matchedPuppi_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV0_default.root")
 
-    # pf_deepcsv_roc    = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV6p1_default.root")
-    # pf_deepcsv_roc2   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV6p1_TICL_default.root")
-    # pf_deepcsv_roc3   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV7p2_default.root")
-    # pf_deepcsv_roc4   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV7p2_TICL_default.root")
+    # pf_deepcsv_roc    = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV6p1_default.root")
+    # pf_deepcsv_roc2   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV6p1_TICL_default.root")
+    # pf_deepcsv_roc3   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV7p2_default.root")
+    # pf_deepcsv_roc4   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV7p2_TICL_default.root")
 
-    pf_deepcsv_roc5   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV6p1_cutsV2.root")
-    pf_deepcsv_roc6   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV6p1_TICL_cutsV2.root")
-    pf_deepcsv_roc7   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV7p2_cutsV2.root")
-    pf_deepcsv_roc8   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV7p2_TICL_cutsV2.root")
+    pf_deepcsv_roc5   = makeRocPlot("PUPPI_deepcsv1"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV6p1_cutsV2.root")
+    pf_deepcsv_roc6   = makeRocPlot("PUPPI_deepcsv2"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV6p1_TICL_cutsV2.root")
+    pf_deepcsv_roc9   = makeRocPlot("PUPPI_deepcsv3"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV6p1_TICLV2_cutsV2_newTICL.root")
+    pf_deepcsv_roc7   = makeRocPlot("PUPPI_deepcsv4"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV7p2_cutsV2.root")
+    pf_deepcsv_roc8   = makeRocPlot("PUPPI_deepcsv5"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV7p2_TICL_cutsV2.root")
+    pf_deepcsv_roc10   = makeRocPlot("PUPPI_deepcsv6"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV7p2_TICLV2_cutsV2.root")
 
     for i, rocType in enumerate(["Rej","Eff"]):
 
-        plotSame("PU200_Off_vs_HLTDeepCSV_"+rocType,
+        plotSame("PU200_Off_vs_HLTDeepCSV_"+rocType+etaRegion,
               # [off_deepcsv_roc[i], pf_deepcsv_roc[i],  pf_deepcsv_roc2[i], pf_deepcsv_roc3[i],  pf_deepcsv_roc4[i],  pf_deepcsv_roc5[i],  pf_deepcsv_roc6[i],  pf_deepcsv_roc7[i],  pf_deepcsv_roc8[i]],
-              # [ROOT.kBlack,      ROOT.kRed,  ROOT.kGreen+2, ROOT.kBlue+1,ROOT.kOrange+1, ROOT.kRed, ROOT.kGreen+2, ROOT.kBlue+1,ROOT.kOrange+1],
+              # [ROOT.kBlack,      ROOT.kRed,  ROOT.kGreen+2, ROOT.kBlue+2,ROOT.kOrange+1, ROOT.kRed, ROOT.kGreen+2, ROOT.kBlue+2,ROOT.kOrange+1],
               # [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kSolid,ROOT.kSolid, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted],
-              [off_deepcsv_roc[i], pf_deepcsv_roc5[i],  pf_deepcsv_roc7[i],  pf_deepcsv_roc6[i],  pf_deepcsv_roc8[i]],
-                 [ROOT.kBlack,      ROOT.kRed,  ROOT.kBlue+1, ROOT.kRed,ROOT.kBlue+1],
-                 [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kDotted,ROOT.kDotted],
+              [off_deepcsv_roc[i], pf_deepcsv_roc5[i],  pf_deepcsv_roc7[i],  pf_deepcsv_roc6[i],  pf_deepcsv_roc8[i], pf_deepcsv_roc9[i], pf_deepcsv_roc10[i]],
+                 [ROOT.kBlack,      ROOT.kRed,  ROOT.kBlue+2, ROOT.kRed,ROOT.kBlue+2, ROOT.kRed,ROOT.kBlue+2],
+                 [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kDotted,ROOT.kDotted, ROOT.kDashDotted, ROOT.kDashDotted],
                  plotCaloJet = False,
                  plotPFJet = True,
                  plotOffJet = True,
@@ -275,55 +288,59 @@ def main():
                  rocType = rocType
                  )
 
-    off_deepcsv_roc   = makeRocPlot("Offline_PUPPI_deepcsv", "DeepCSV_l", bkg="matchedPuppi_L",sig="matchedPuppi_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV0_default.root")
+    # off_deepcsv_roc   = makeRocPlot("Offline_PUPPI_deepcsv7"+etaRegion, "DeepCSV_l", bkg="matchedPuppi_L"+etaRegion,sig="matchedPuppi_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV0_default.root")
+    #
+    # # pf_deepcsv_roc    = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV6p1_default.root")
+    # # pf_deepcsv_roc2   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV6p1_TICL_default.root")
+    # # pf_deepcsv_roc3   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV7p2_default.root")
+    # # pf_deepcsv_roc4   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV7p2_TICL_default.root")
+    #
+    # pf_deepcsv_roc5   = makeRocPlot("PUPPI_deepcsv8"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV6p1_cutsV2.root")
+    # pf_deepcsv_roc6   = makeRocPlot("PUPPI_deepcsv9"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV6p1_TICL_cutsV2.root")
+    # pf_deepcsv_roc9   = makeRocPlot("PUPPI_deepcsv10"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV6p1_TICLV2_cutsV2_newTICL.root")
+    # pf_deepcsv_roc7   = makeRocPlot("PUPPI_deepcsv11"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV7p2_cutsV2.root")
+    # pf_deepcsv_roc8   = makeRocPlot("PUPPI_deepcsv12"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV7p2_TICL_cutsV2.root")
+    # pf_deepcsv_roc10   = makeRocPlot("PUPPI_deepcsv13"+etaRegion,     "DeepCSV_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV7p2_TICLV2_cutsV2.root")
+    #
+    # for i, rocType in enumerate(["Rej","Eff"]):
+    #
+    #     plotSame("NoPU_Off_vs_HLTDeepCSV_"+rocType+etaRegion,
+    #              # [off_deepcsv_roc[i], pf_deepcsv_roc[i],  pf_deepcsv_roc2[i], pf_deepcsv_roc3[i],  pf_deepcsv_roc4[i],  pf_deepcsv_roc5[i],  pf_deepcsv_roc6[i],  pf_deepcsv_roc7[i],  pf_deepcsv_roc8[i]],
+    #              # [ROOT.kBlack,      ROOT.kRed,  ROOT.kGreen+2, ROOT.kBlue+2,ROOT.kOrange+1, ROOT.kRed, ROOT.kGreen+2, ROOT.kBlue+2,ROOT.kOrange+1],
+    #              # [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kSolid,ROOT.kSolid, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted],
+    #              [off_deepcsv_roc[i], pf_deepcsv_roc5[i],  pf_deepcsv_roc7[i],  pf_deepcsv_roc6[i],  pf_deepcsv_roc8[i], pf_deepcsv_roc9[i], pf_deepcsv_roc10[i]],
+    #              [ROOT.kBlack,      ROOT.kRed,  ROOT.kBlue+2, ROOT.kRed,ROOT.kBlue+2, ROOT.kRed,ROOT.kBlue+2],
+    #              [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kDotted,ROOT.kDotted, ROOT.kDashDotted, ROOT.kDashDotted],
+    #              plotCaloJet = False,
+    #              plotPFJet = True,
+    #              plotOffJet = True,
+    #              plotCSV = False,
+    #              plotDeepCSV = True,
+    #              rocType = rocType
+    #              )
+    off_deepjet_roc   = makeRocPlot("Offline_PUPPI_deepjet14"+etaRegion, "DeepJet_l", bkg="matchedPuppi_L"+etaRegion,sig="matchedPuppi_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV0_default.root")
 
-    # pf_deepcsv_roc    = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV6p1_default.root")
-    # pf_deepcsv_roc2   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV6p1_TICL_default.root")
-    # pf_deepcsv_roc3   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV7p2_default.root")
-    # pf_deepcsv_roc4   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV7p2_TICL_default.root")
+    # pf_deepjet_roc    = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV6p1_default.root")
+    # pf_deepjet_roc2   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV6p1_TICL_default.root")
+    # pf_deepjet_roc3   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV7p2_default.root")
+    # pf_deepjet_roc4   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV7p2_TICL_default.root")
 
-    pf_deepcsv_roc5   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV6p1_cutsV2.root")
-    pf_deepcsv_roc6   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV6p1_TICL_cutsV2.root")
-    pf_deepcsv_roc7   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV7p2_cutsV2.root")
-    pf_deepcsv_roc8   = makeRocPlot("PUPPI_deepcsv",     "DeepCSV_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV7p2_TICL_cutsV2.root")
+    pf_deepjet_roc5   = makeRocPlot("PUPPI_deepjet15"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV6p1_cutsV2.root")
+    pf_deepjet_roc6   = makeRocPlot("PUPPI_deepjet16"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV6p1_TICL_cutsV2.root")
+    pf_deepjet_roc9   = makeRocPlot("PUPPI_deepjet17"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV6p1_TICLV2_cutsV2_newTICL.root")
+    pf_deepjet_roc7   = makeRocPlot("PUPPI_deepjet18"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV7p2_cutsV2.root")
+    pf_deepjet_roc8   = makeRocPlot("PUPPI_deepjet19"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV7p2_TICL_cutsV2.root")
+    pf_deepjet_roc10   = makeRocPlot("PUPPI_deepjet20"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_PU200_TrackingV7p2_TICLV2_cutsV2.root")
 
     for i, rocType in enumerate(["Rej","Eff"]):
 
-        plotSame("NoPU_Off_vs_HLTDeepCSV_"+rocType,
-                 # [off_deepcsv_roc[i], pf_deepcsv_roc[i],  pf_deepcsv_roc2[i], pf_deepcsv_roc3[i],  pf_deepcsv_roc4[i],  pf_deepcsv_roc5[i],  pf_deepcsv_roc6[i],  pf_deepcsv_roc7[i],  pf_deepcsv_roc8[i]],
-                 # [ROOT.kBlack,      ROOT.kRed,  ROOT.kGreen+2, ROOT.kBlue+1,ROOT.kOrange+1, ROOT.kRed, ROOT.kGreen+2, ROOT.kBlue+1,ROOT.kOrange+1],
-                 # [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kSolid,ROOT.kSolid, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted],
-                 [off_deepcsv_roc[i], pf_deepcsv_roc5[i],  pf_deepcsv_roc7[i],  pf_deepcsv_roc6[i],  pf_deepcsv_roc8[i]],
-                 [ROOT.kBlack,      ROOT.kRed,  ROOT.kBlue+1, ROOT.kRed,ROOT.kBlue+1],
-                 [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kDotted,ROOT.kDotted],
-                 plotCaloJet = False,
-                 plotPFJet = True,
-                 plotOffJet = True,
-                 plotCSV = False,
-                 plotDeepCSV = True,
-                 rocType = rocType
-                 )
-    off_deepjet_roc   = makeRocPlot("Offline_PUPPI_deepjet", "DeepJet_l", bkg="matchedPuppi_L",sig="matchedPuppi_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV0_default.root")
-
-    # pf_deepjet_roc    = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV6p1_default.root")
-    # pf_deepjet_roc2   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV6p1_TICL_default.root")
-    # pf_deepjet_roc3   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV7p2_default.root")
-    # pf_deepjet_roc4   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV7p2_TICL_default.root")
-
-    pf_deepjet_roc5   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV6p1_cutsV2.root")
-    pf_deepjet_roc6   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV6p1_TICL_cutsV2.root")
-    pf_deepjet_roc7   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV7p2_cutsV2.root")
-    pf_deepjet_roc8   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_PU200_TrackingV7p2_TICL_cutsV2.root")
-
-    for i, rocType in enumerate(["Rej","Eff"]):
-
-        plotSame("PU200_Off_vs_HLTDeepJet_"+rocType,
+        plotSame("PU200_Off_vs_HLTDeepJet_"+rocType+etaRegion,
               # [off_deepjet_roc[i], pf_deepjet_roc[i],  pf_deepjet_roc2[i], pf_deepjet_roc3[i],  pf_deepjet_roc4[i],  pf_deepjet_roc5[i],  pf_deepjet_roc6[i],  pf_deepjet_roc7[i],  pf_deepjet_roc8[i]],
-              # [ROOT.kBlack,      ROOT.kRed,  ROOT.kGreen+2, ROOT.kBlue+1,ROOT.kOrange+1, ROOT.kRed, ROOT.kGreen+2, ROOT.kBlue+1,ROOT.kOrange+1],
+              # [ROOT.kBlack,      ROOT.kRed,  ROOT.kGreen+2, ROOT.kBlue+2,ROOT.kOrange+1, ROOT.kRed, ROOT.kGreen+2, ROOT.kBlue+2,ROOT.kOrange+1],
               # [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kSolid,ROOT.kSolid, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted],
-              [off_deepjet_roc[i], pf_deepjet_roc5[i],  pf_deepjet_roc7[i],  pf_deepjet_roc6[i],  pf_deepjet_roc8[i]],
-              [ROOT.kBlack,      ROOT.kRed,  ROOT.kBlue+1, ROOT.kRed,ROOT.kBlue+1],
-              [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kDotted,ROOT.kDotted],
+              [off_deepjet_roc[i], pf_deepjet_roc5[i],  pf_deepjet_roc7[i],  pf_deepjet_roc6[i],  pf_deepjet_roc8[i], pf_deepjet_roc9[i], pf_deepjet_roc10[i]],
+              [ROOT.kBlack,      ROOT.kRed,  ROOT.kBlue+2, ROOT.kRed,ROOT.kBlue+2, ROOT.kRed,ROOT.kBlue+2],
+              [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kDotted,ROOT.kDotted, ROOT.kDashDotted, ROOT.kDashDotted],
                  plotCaloJet = False,
                  plotPFJet = True,
                  plotOffJet = True,
@@ -333,35 +350,40 @@ def main():
                  rocType = rocType
                  )
 
-    off_deepjet_roc   = makeRocPlot("Offline_PUPPI_deepjet", "DeepJet_l", bkg="matchedPuppi_L",sig="matchedPuppi_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV0_default.root")
-
-    # pf_deepjet_roc    = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV6p1_default.root")
-    # pf_deepjet_roc2   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV6p1_TICL_default.root")
-    # pf_deepjet_roc3   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV7p2_TICL_default.root")
-    # pf_deepjet_roc4   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV7p2_TICL_default.root")
-
-    pf_deepjet_roc5   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV6p1_cutsV2.root")
-    pf_deepjet_roc6   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV6p1_TICL_cutsV2.root")
-    pf_deepjet_roc7   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV7p2_cutsV2.root")
-    pf_deepjet_roc8   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets", inFile = "../NtupleAna/run/OUTPUT/17_10_20_PreWorkshop/ttbar_NoPU_TrackingV7p2_TICL_cutsV2.root")
-
-    for i, rocType in enumerate(["Rej","Eff"]):
-
-        plotSame("NoPU_Off_vs_HLTDeepJet_"+rocType,
-                 # [off_deepjet_roc[i], pf_deepjet_roc[i],  pf_deepjet_roc2[i], pf_deepjet_roc3[i],  pf_deepjet_roc4[i],  pf_deepjet_roc5[i],  pf_deepjet_roc6[i],  pf_deepjet_roc7[i],  pf_deepjet_roc8[i]],
-                 # [ROOT.kBlack,      ROOT.kRed,  ROOT.kGreen+2, ROOT.kBlue+1,ROOT.kOrange+1, ROOT.kRed, ROOT.kGreen+2, ROOT.kBlue+1,ROOT.kOrange+1],
-                 # [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kSolid,ROOT.kSolid, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted],
-                 [off_deepjet_roc[i], pf_deepjet_roc5[i],  pf_deepjet_roc7[i],  pf_deepjet_roc6[i],  pf_deepjet_roc8[i]],
-                 [ROOT.kBlack,      ROOT.kRed,  ROOT.kBlue+1, ROOT.kRed,ROOT.kBlue+1],
-                 [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kDotted,ROOT.kDotted],
-                 plotCaloJet = False,
-                 plotPFJet = True,
-                 plotOffJet = True,
-                 plotCSV = False,
-                 plotDeepCSV = False,
-                 plotDeepJet = True,
-                 rocType = rocType
-                 )
+    # off_deepjet_roc   = makeRocPlot("Offline_PUPPI_deepjet21"+etaRegion, "DeepJet_l", bkg="matchedPuppi_L"+etaRegion,sig="matchedPuppi_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV0_default.root")
+    #
+    # # pf_deepjet_roc    = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV6p1_default.root")
+    # # pf_deepjet_roc2   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV6p1_TICL_default.root")
+    # # pf_deepjet_roc3   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV7p2_TICL_default.root")
+    # # pf_deepjet_roc4   = makeRocPlot("PUPPI_deepjet",     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV7p2_TICL_default.root")
+    #
+    # pf_deepjet_roc5   = makeRocPlot("PUPPI_deepjet22"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV6p1_cutsV2.root")
+    # pf_deepjet_roc6   = makeRocPlot("PUPPI_deepjet23"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV6p1_TICL_cutsV2.root")
+    # pf_deepjet_roc9   = makeRocPlot("PUPPI_deepjet24"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV6p1_TICLV2_cutsV2_newTICL.root")
+    # pf_deepjet_roc7   = makeRocPlot("PUPPI_deepjet25"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV7p2_cutsV2.root")
+    # pf_deepjet_roc8   = makeRocPlot("PUPPI_deepjet26"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV7p2_TICL_cutsV2.root")
+    # pf_deepjet_roc10   = makeRocPlot("PUPPI_deepjet27"+etaRegion,     "DeepJet_l", bkg="matchedPuppiJet_L"+etaRegion,sig="matchedPuppiJet_B"+etaRegion,dir="offJets", inFile = "../NtupleAna/run/OUTPUT/29_10_20_Workshop/ttbar_NoPU_TrackingV7p2_TICLV2_cutsV2.root")
+    #
+    # for i, rocType in enumerate(["Rej","Eff"]):
+    #
+    #     plotSame("NoPU_Off_vs_HLTDeepJet_"+rocType+etaRegion,
+    #              # [off_deepjet_roc[i], pf_deepjet_roc[i],  pf_deepjet_roc2[i], pf_deepjet_roc3[i],  pf_deepjet_roc4[i],  pf_deepjet_roc5[i],  pf_deepjet_roc6[i],  pf_deepjet_roc7[i],  pf_deepjet_roc8[i]],
+    #              # [ROOT.kBlack,      ROOT.kRed,  ROOT.kGreen+2, ROOT.kBlue+2,ROOT.kOrange+1, ROOT.kRed, ROOT.kGreen+2, ROOT.kBlue+2,ROOT.kOrange+1],
+    #              # [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kSolid,ROOT.kSolid, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted, ROOT.kDotted],
+    #              [off_deepjet_roc[i], pf_deepjet_roc5[i],  pf_deepjet_roc7[i],  pf_deepjet_roc6[i],  pf_deepjet_roc8[i], pf_deepjet_roc9[i], pf_deepjet_roc10[i]],
+    #              [ROOT.kBlack,      ROOT.kRed,  ROOT.kBlue+2, ROOT.kRed,ROOT.kBlue+2, ROOT.kRed,ROOT.kBlue+2],
+    #              [ROOT.kSolid,      ROOT.kSolid,  ROOT.kSolid, ROOT.kDotted,ROOT.kDotted, ROOT.kDashDotted, ROOT.kDashDotted],
+    #              plotCaloJet = False,
+    #              plotPFJet = True,
+    #              plotOffJet = True,
+    #              plotCSV = False,
+    #              plotDeepCSV = False,
+    #              plotDeepJet = True,
+    #              rocType = rocType
+    #              )
 
 if __name__ == "__main__":
     main()
+    main(etaRegion="_eta1")
+    main(etaRegion="_eta2")
+    main(etaRegion="_eta3")
