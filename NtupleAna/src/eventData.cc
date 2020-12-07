@@ -237,19 +237,19 @@ void eventData::update(int e){
   }
 
 
-  if(doOffline) offJets  = offTreeJets->getJets(30,1e6,4);
-  pfJets   = pfTreeJets ->getJets(30,1e6,4);
+  if(doOffline) offJets  = offTreeJets->getJets(30,1e6,4.);
+  pfJets   = pfTreeJets ->getJets(30,1e6,4.);
   if(doCaloJets)
-    caloJets = caloTreeJets ->getJets(30,1e6,2.4);
+    caloJets = caloTreeJets ->getJets(30,1e6,4.);
   if(doPuppiJets)
     puppiJets = puppiTreeJets ->getJets(30,1e6,4.);
 
   if(doOffline){
     if(treeMuons)
-      muons    = treeMuons  ->getMuons(30, 3.);
+      muons    = treeMuons  ->getMuons(30, 4.);
 
     if(treeElecs)
-      elecs    = treeElecs  ->getElecs(30, 3.);
+      elecs    = treeElecs  ->getElecs(30, 4.);
 
     offPVs = offTreePVs  ->getVerticies();
   }

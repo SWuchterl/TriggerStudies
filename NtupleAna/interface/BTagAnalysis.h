@@ -113,14 +113,34 @@ namespace TriggerStudies {
 
     nTupleAnalysis::jetHists*    hOffJet_matchedPuppicsvTag         ;
     nTupleAnalysis::jetHists*    hOffJet_matchedPuppicsvTagJet      ;
+
     nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepcsvTag     ;
     nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepcsvTagJet  ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepcsvTagLoose     ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepcsvTagLooseJet  ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepcsvTagMedium     ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepcsvTagMediumJet  ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepcsvTagTight     ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepcsvTagTightJet  ;
+
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepflavTag     ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepflavTagJet  ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepflavTagLoose     ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepflavTagLooseJet  ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepflavTagMedium     ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepflavTagMediumJet  ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepflavTagTight     ;
+    nTupleAnalysis::jetHists*    hOffJet_matchedPuppiDeepflavTagTightJet  ;
+
     nTupleAnalysis::jetHists*    hOffJetTightDeepCSV_matchedPuppiJet       ;
     nTupleAnalysis::jetHists*    hOffJetMediumDeepCSV_matchedPuppiJet      ;
+    nTupleAnalysis::jetHists*    hOffJetTightDeepFlav_matchedPuppiJet       ;
+    nTupleAnalysis::jetHists*    hOffJetMediumDeepFlav_matchedPuppiJet      ;
     nTupleAnalysis::jetHists*    hOffJetMedDeepCSV_matchedPuppiJet      ;
     nTupleAnalysis::jetHists*    hOffJetMedDeepCSV_matchedPuppiDeepCSV  ;
     nTupleAnalysis::jetHists*    hOffJetMedDeepCSV_matchedPuppiCSV      ;
     nTupleAnalysis::jetHists*    hOffJetLooseDeepCSV_matchedPuppiJet       ;
+    nTupleAnalysis::jetHists*    hOffJetLooseDeepFlav_matchedPuppiJet       ;
     nTupleAnalysis::jetHists*    hOffJetMedDeepFlav_matchedPuppiJet      ;
     nTupleAnalysis::jetHists*    hOffJetMedDeepFlav_matchedPuppiDeepCSV  ;
     nTupleAnalysis::jetHists*    hOffJetMedDeepFlav_matchedPuppiCSV      ;
@@ -277,7 +297,9 @@ namespace TriggerStudies {
     float OfflineDeepCSVTightCut  = -99;
     float OfflineDeepCSVMediumCut = -99;
     float OfflineDeepCSVLooseCut  = -99;
+    float OfflineDeepFlavourTightCut = -99;
     float OfflineDeepFlavourMediumCut = -99;
+    float OfflineDeepFlavourLooseCut = -99;
     float OnlineCSVCut            = -99;
     float OnlineDeepCSVCut        = -99;
 

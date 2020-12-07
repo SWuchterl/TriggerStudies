@@ -14,20 +14,32 @@ using std::vector;  using std::map; using std::string; using std::set;
 
 // 2018
 // https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation102X
-const float OfflineDeepCSVTightCut2018  = 0.7527;
-const float OfflineDeepCSVMediumCut2018 = 0.4184;
-const float OfflineDeepCSVLooseCut2018  = 0.1241;
+// const float OfflineDeepCSVTightCut2018  = 0.7527;
+// const float OfflineDeepCSVMediumCut2018 = 0.4184;
+// const float OfflineDeepCSVLooseCut2018  = 0.1241;
+const float OfflineDeepCSVTightCutPhaseII = 0.9;
+const float OfflineDeepCSVMediumCutPhaseII = 0.75;
+const float OfflineDeepCSVLooseCutPhaseII  = 0.6;
 
 
-const float OfflineDeepFlavourTightCut2018   = 0.7264;
-const float OfflineDeepFlavourMediumCut2018  = 0.2770;
-const float OfflineDeepFlavourLooseCut2018   = 0.0494;
+// const float OfflineDeepFlavourTightCut2018   = 0.7264;
+// const float OfflineDeepFlavourMediumCut2018  = 0.2770;
+// const float OfflineDeepFlavourLooseCut2018   = 0.0494;
+const float OfflineDeepFlavourTightCutPhaseII   = 0.93;
+const float OfflineDeepFlavourMediumCutPhaseII  = 0.8;
+const float OfflineDeepFlavourLooseCutPhaseII   = 0.6;
 
 // https://cmswbm.cern.ch/cmsdb/servlet/HLTPath?PATHID=2117358
 // https://cmswbm.cern.ch/cmsdb/servlet/HLTPath?PATHID=2090546
 const float OnlineDeepCSVCutPF    = 0.24;
 const float OnlineDeepCSVCutCalo  = 0.17;
-const float OnlineDeepCSVCutPuppi  = 0.17;
+// const float OnlineDeepCSVCutPuppi  = 0.17;
+const float OnlineDeepCSVCutPuppiLoose  = 0.5;
+const float OnlineDeepCSVCutPuppiMedium  = 0.7;
+const float OnlineDeepCSVCutPuppiTight  = 0.85;
+const float OnlineDeepFlavourCutPuppiLoose  = 0.5;
+const float OnlineDeepFlavourCutPuppiMedium  = 0.7;
+const float OnlineDeepFlavourCutPuppiTight  = 0.85;
 const float OnlineCSVCutPF        = 0.7;
 const float OnlineCSVCutCalo      = 0.5;
 const float OnlineCSVCutPuppi      = 0.5;
@@ -35,13 +47,13 @@ const float OnlineCSVCutPuppi      = 0.5;
 
 // 2017
 // https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
-const float OfflineDeepCSVTightCut2017  = 0.8001;
-const float OfflineDeepCSVMediumCut2017 = 0.4941;
-const float OfflineDeepCSVLooseCut2017  = 0.1522;
-
-const float OfflineDeepFlavourTightCut2017   = 0.7489;
-const float OfflineDeepFlavourMediumCut2017  = 0.3033;
-const float OfflineDeepFlavourLooseCut2017   = 0.0521;
+// const float OfflineDeepCSVTightCut2017  = 0.8001;
+// const float OfflineDeepCSVMediumCut2017 = 0.4941;
+// const float OfflineDeepCSVLooseCut2017  = 0.1522;
+//
+// const float OfflineDeepFlavourTightCut2017   = 0.7489;
+// const float OfflineDeepFlavourMediumCut2017  = 0.3033;
+// const float OfflineDeepFlavourLooseCut2017   = 0.0521;
 
 
 
@@ -171,10 +183,29 @@ BTagAnalysis::BTagAnalysis(TChain* _eventsRAW, TChain* _eventsAOD, fwlite::TFile
     hOffJet_matchedPuppicsvTagJet      = new nTupleAnalysis::jetHists("offJets_matchedPuppicsvTagJet",      fs, "");
     hOffJet_matchedPuppiDeepcsvTag     = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepcsvTag",     fs, "");
     hOffJet_matchedPuppiDeepcsvTagJet  = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepcsvTagJet",  fs, "");
+    hOffJet_matchedPuppiDeepcsvTagLoose     = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepcsvTagLoose",     fs, "");
+    hOffJet_matchedPuppiDeepcsvTagLooseJet  = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepcsvTagLooseJet",  fs, "");
+    hOffJet_matchedPuppiDeepcsvTagMedium     = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepcsvTagMedium",     fs, "");
+    hOffJet_matchedPuppiDeepcsvTagMediumJet  = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepcsvTagMediumJet",  fs, "");
+    hOffJet_matchedPuppiDeepcsvTagTight     = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepcsvTagTight",     fs, "");
+    hOffJet_matchedPuppiDeepcsvTagTightJet  = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepcsvTagJetTight",  fs, "");
+
+    hOffJet_matchedPuppiDeepflavTag     = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepflavTag",     fs, "");
+    hOffJet_matchedPuppiDeepflavTagJet  = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepflavTagJet",  fs, "");
+    hOffJet_matchedPuppiDeepflavTagLoose     = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepflavTagLoose",     fs, "");
+    hOffJet_matchedPuppiDeepflavTagLooseJet  = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepflavTagLooseJet",  fs, "");
+    hOffJet_matchedPuppiDeepflavTagMedium     = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepflavTagMedium",     fs, "");
+    hOffJet_matchedPuppiDeepflavTagMediumJet  = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepflavTagMediumJet",  fs, "");
+    hOffJet_matchedPuppiDeepflavTagTight     = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepflavTagTight",     fs, "");
+    hOffJet_matchedPuppiDeepflavTagTightJet  = new nTupleAnalysis::jetHists("offJets_matchedPuppiDeepflavTagJetTight",  fs, "");
 
     hOffJetTightDeepCSV_matchedPuppiJet       = new nTupleAnalysis::jetHists("offJetsTight_matchedPuppiJet",       fs, "");
     hOffJetMediumDeepCSV_matchedPuppiJet      = new nTupleAnalysis::jetHists("offJetsMedium_matchedPuppiJet",      fs, "");
     hOffJetLooseDeepCSV_matchedPuppiJet       = new nTupleAnalysis::jetHists("offJetsLoose_matchedPuppiJet",       fs, "");
+
+    hOffJetTightDeepFlav_matchedPuppiJet       = new nTupleAnalysis::jetHists("offJetsTightFlav_matchedPuppiJet",       fs, "");
+    hOffJetMediumDeepFlav_matchedPuppiJet      = new nTupleAnalysis::jetHists("offJetsMediumFlav_matchedPuppiJet",      fs, "");
+    hOffJetLooseDeepFlav_matchedPuppiJet       = new nTupleAnalysis::jetHists("offJetsLooseFlav_matchedPuppiJet",       fs, "");
 
     hOffJetMedDeepCSV_matchedPuppiJet      = new nTupleAnalysis::jetHists("offJetsMedDeepCSV_matchedPuppiJet",      fs, "", "matchedBJet");
     hOffJetMedDeepCSV_matchedPuppiDeepCSV  = new nTupleAnalysis::jetHists("offJetsMedDeepCSV_matchedPuppiDeepCSV",  fs, "", "matchedBJet");
@@ -370,16 +401,22 @@ BTagAnalysis::BTagAnalysis(TChain* _eventsRAW, TChain* _eventsAOD, fwlite::TFile
   //
   //  Configure Selection
   //
-  OfflineDeepCSVTightCut  = OfflineDeepCSVTightCut2017  ;
-  OfflineDeepCSVMediumCut = OfflineDeepCSVMediumCut2017 ;
-  OfflineDeepCSVLooseCut  = OfflineDeepCSVLooseCut2017  ;
-  OfflineDeepFlavourMediumCut = OfflineDeepFlavourMediumCut2017 ;
-  if(_year == "2018"){
-    OfflineDeepCSVTightCut  = OfflineDeepCSVTightCut2018  ;
-    OfflineDeepCSVMediumCut = OfflineDeepCSVMediumCut2018 ;
-    OfflineDeepCSVLooseCut  = OfflineDeepCSVLooseCut2018 ;
-    OfflineDeepFlavourMediumCut = OfflineDeepFlavourMediumCut2018 ;
-  }
+  OfflineDeepCSVTightCut  = OfflineDeepCSVTightCutPhaseII  ;
+  OfflineDeepCSVMediumCut = OfflineDeepCSVMediumCutPhaseII ;
+  OfflineDeepCSVLooseCut  = OfflineDeepCSVLooseCutPhaseII  ;
+  OfflineDeepFlavourTightCut  = OfflineDeepFlavourTightCutPhaseII ;
+  OfflineDeepFlavourMediumCut = OfflineDeepFlavourMediumCutPhaseII ;
+  OfflineDeepFlavourLooseCut  = OfflineDeepFlavourLooseCutPhaseII ;
+  // OfflineDeepCSVTightCut  = OfflineDeepCSVTightCut2017  ;
+  // OfflineDeepCSVMediumCut = OfflineDeepCSVMediumCut2017 ;
+  // OfflineDeepCSVLooseCut  = OfflineDeepCSVLooseCut2017  ;
+  // OfflineDeepFlavourMediumCut = OfflineDeepFlavourMediumCut2017 ;
+  // if(_year == "2018"){
+  //   OfflineDeepCSVTightCut  = OfflineDeepCSVTightCut2018  ;
+  //   OfflineDeepCSVMediumCut = OfflineDeepCSVMediumCut2018 ;
+  //   OfflineDeepCSVLooseCut  = OfflineDeepCSVLooseCut2018 ;
+  //   OfflineDeepFlavourMediumCut = OfflineDeepFlavourMediumCut2018 ;
+  // }
 
 
 
@@ -1375,10 +1412,11 @@ void BTagAnalysis::PFJetAnalysis(const nTupleAnalysis::jetPtr& offJet,const nTup
   }
 
   //
-  // Offline Btaggs
+  // Offline Btags
   //
-  if((offJet->DeepCSV > OfflineDeepCSVTightCut))
+  if((offJet->DeepCSV > OfflineDeepCSVTightCut)){
     hOffJetTightDeepCSV_matchedPFJet->Fill(hltJet, weight);
+}
   if((offJet->DeepCSV > OfflineDeepCSVMediumCut)){
     hOffJetMediumDeepCSV_matchedPFJet->Fill(hltJet, weight);
     hOffJetMedDeepCSV_matchedPFJet    ->Fill(offJet, weight);
@@ -1386,10 +1424,11 @@ void BTagAnalysis::PFJetAnalysis(const nTupleAnalysis::jetPtr& offJet,const nTup
     if(hltJet->DeepCSV > OnlineDeepCSVCutPF) hOffJetMedDeepCSV_matchedPFDeepCSV->Fill(offJet, weight);
   }
 
-  if((offJet->DeepCSV > OfflineDeepCSVLooseCut))
+  if((offJet->DeepCSV > OfflineDeepCSVLooseCut)){
     hOffJetLooseDeepCSV_matchedPFJet->Fill(hltJet, weight);
+    }
 
-  if(offJet->deepFlavB > OfflineDeepFlavourMediumCut){
+  if(offJet->DeepJet > OfflineDeepFlavourMediumCut){
     hOffJetMedDeepFlav_matchedPFJet ->Fill(offJet, weight);
     if(hltJet->CSVv2   > OnlineCSVCutPF)     hOffJetMedDeepFlav_matchedPFCSV    ->Fill(offJet, weight);
     if(hltJet->DeepCSV > OnlineDeepCSVCutPF) hOffJetMedDeepFlav_matchedPFDeepCSV->Fill(offJet, weight);
@@ -1616,7 +1655,7 @@ void BTagAnalysis::CaloJetAnalysis(const nTupleAnalysis::jetPtr& offJet,const nT
   if((offJet->DeepCSV > OfflineDeepCSVLooseCut))
     hOffJetLooseDeepCSV_matchedCaloJet->Fill(hltJet, weight);
 
-  if(offJet->deepFlavB > OfflineDeepFlavourMediumCut){
+  if(offJet->DeepJet > OfflineDeepFlavourMediumCut){
     hOffJetMedDeepFlav_matchedCaloJet ->Fill(offJet, weight);
     if(hltJet->CSVv2   > OnlineCSVCutCalo)     hOffJetMedDeepFlav_matchedCaloCSV    ->Fill(offJet, weight);
     if(hltJet->DeepCSV > OnlineDeepCSVCutCalo) hOffJetMedDeepFlav_matchedCaloDeepCSV->Fill(offJet, weight);
@@ -1695,6 +1734,7 @@ void BTagAnalysis::PuppiJetAnalysis(const nTupleAnalysis::jetPtr& offJet,const n
           //if offTrack.dR > 0.29 - offJet.match_dR: continue
           if(offTrack->dR                  > 0.29) continue; // offTrack is not in cone of offJet
           if(offTrack->p.DeltaR(hltJet->p) > 0.29) continue; // offTrack is not in cone of puppiJet
+
 
 
           hOffTracksPuppi->Fill(offTrack, weight);
@@ -1818,6 +1858,7 @@ void BTagAnalysis::PuppiJetAnalysis(const nTupleAnalysis::jetPtr& offJet,const n
           //need to check that the track (with matching resolution cone r=0.01) is in region where R=0.3 circles inside the two jets overlap!
           if(puppiTrack->dR                  > 0.29) continue; // puppiTrack is not in cone of puppiJet
           if(puppiTrack->p.DeltaR(offJet->p) > 0.29) continue; // puppiTrack is not in cone of offJet
+          // if((1.48<abs(puppiTrack->eta) && abs(puppiTrack->eta)< 3.0 &&puppiTrack-> pt>1.0)) continue; // puppiTrack is not in cone of offJet
 
           hPuppiTracks->Fill(puppiTrack, weight); //all puppitracks in matched jets
           hPuppiTracks->FillMatchStats(puppiTrack, weight); //check how often we match puppiTracks to more than one offTrack
@@ -1892,39 +1933,74 @@ void BTagAnalysis::PuppiJetAnalysis(const nTupleAnalysis::jetPtr& offJet,const n
       //
       // Offline Btaggs
       //
-      if((offJet->DeepCSV > OfflineDeepCSVTightCut))
+      if((offJet->DeepCSV > OfflineDeepCSVTightCut)){
         hOffJetTightDeepCSV_matchedPuppiJet->Fill(hltJet, weight);
+      }
       if((offJet->DeepCSV > OfflineDeepCSVMediumCut)){
         hOffJetMediumDeepCSV_matchedPuppiJet->Fill(hltJet, weight);
-        hOffJetMedDeepCSV_matchedPuppiJet    ->Fill(offJet, weight);
+        // hOffJetMedDeepCSV_matchedPuppiJet    ->Fill(offJet, weight);
         if(hltJet->CSVv2   > OnlineCSVCutPuppi)     hOffJetMedDeepCSV_matchedPuppiCSV    ->Fill(offJet, weight);
-        if(hltJet->DeepCSV > OnlineDeepCSVCutPuppi) hOffJetMedDeepCSV_matchedPuppiDeepCSV->Fill(offJet, weight);
+        // if(hltJet->DeepCSV > OnlineDeepCSVCutPuppi) hOffJetMedDeepCSV_matchedPuppiDeepCSV->Fill(offJet, weight);
+        if(hltJet->DeepCSV > OnlineDeepCSVCutPuppiMedium) hOffJetMedDeepCSV_matchedPuppiDeepCSV->Fill(offJet, weight);
       }
 
-      if((offJet->DeepCSV > OfflineDeepCSVLooseCut))
+      if((offJet->DeepCSV > OfflineDeepCSVLooseCut)){
         hOffJetLooseDeepCSV_matchedPuppiJet->Fill(hltJet, weight);
+    }
 
-      if(offJet->deepFlavB > OfflineDeepFlavourMediumCut){
-        hOffJetMedDeepFlav_matchedPuppiJet ->Fill(offJet, weight);
-        if(hltJet->CSVv2   > OnlineCSVCutPuppi)     hOffJetMedDeepFlav_matchedPuppiCSV    ->Fill(offJet, weight);
-        if(hltJet->DeepCSV > OnlineDeepCSVCutPuppi) hOffJetMedDeepFlav_matchedPuppiDeepCSV->Fill(offJet, weight);
+        if((offJet->DeepJet > OfflineDeepFlavourTightCut)){
+          hOffJetTightDeepFlav_matchedPuppiJet->Fill(hltJet, weight);
+        }
+      if(offJet->DeepJet > OfflineDeepFlavourMediumCut){
+        hOffJetMediumDeepFlav_matchedPuppiJet->Fill(hltJet, weight);
+        // hOffJetMedDeepFlav_matchedPuppiJet ->Fill(offJet, weight);
+        // if(hltJet->CSVv2   > OnlineCSVCutPuppi)     hOffJetMedDeepFlav_matchedPuppiCSV    ->Fill(offJet, weight);
+        // if(hltJet->DeepJet > OnlineDeepCSVCutPuppi) hOffJetMedDeepFlav_matchedPuppiDeepCSV->Fill(offJet, weight);
+        if(hltJet->DeepJet > OnlineDeepCSVCutPuppiMedium) hOffJetMedDeepFlav_matchedPuppiDeepCSV->Fill(offJet, weight);
       }
+      if((offJet->DeepJet > OfflineDeepFlavourLooseCut))
+        hOffJetLooseDeepFlav_matchedPuppiJet->Fill(hltJet, weight);
 
       //
       // If pass CVS working point
       //
-      if(hltJet->CSVv2 >= OnlineCSVCutPuppi){
-        hOffJet_matchedPuppicsvTag   ->Fill(offJet, weight);
-        hOffJet_matchedPuppicsvTagJet->Fill(hltJet, weight);
-      }
+      // if(hltJet->CSVv2 >= OnlineCSVCutPuppi){
+      //   hOffJet_matchedPuppicsvTag   ->Fill(offJet, weight);
+      //   hOffJet_matchedPuppicsvTagJet->Fill(hltJet, weight);
+      // }
 
 
       //
       // If pass DeepCVS working point
       //
-      if(hltJet->DeepCSV >= OnlineDeepCSVCutPuppi){
-        hOffJet_matchedPuppiDeepcsvTag   ->Fill(offJet, weight);
-        hOffJet_matchedPuppiDeepcsvTagJet->Fill(hltJet, weight);
+      // if(hltJet->DeepCSV >= OnlineDeepCSVCutPuppi){
+      //   hOffJet_matchedPuppiDeepcsvTag   ->Fill(offJet, weight);
+      //   hOffJet_matchedPuppiDeepcsvTagJet->Fill(hltJet, weight);
+      // }
+      if(hltJet->DeepCSV >= OnlineDeepCSVCutPuppiLoose){
+        hOffJet_matchedPuppiDeepcsvTagLoose   ->Fill(offJet, weight);
+        hOffJet_matchedPuppiDeepcsvTagLooseJet->Fill(hltJet, weight);
+      }
+      if(hltJet->DeepCSV >= OnlineDeepCSVCutPuppiMedium){
+        hOffJet_matchedPuppiDeepcsvTagMedium   ->Fill(offJet, weight);
+        hOffJet_matchedPuppiDeepcsvTagMediumJet->Fill(hltJet, weight);
+      }
+      if(hltJet->DeepCSV >= OnlineDeepCSVCutPuppiTight){
+        hOffJet_matchedPuppiDeepcsvTagTight   ->Fill(offJet, weight);
+        hOffJet_matchedPuppiDeepcsvTagTightJet->Fill(hltJet, weight);
+      }
+
+      if(hltJet->DeepJet >= OnlineDeepFlavourCutPuppiLoose){
+        hOffJet_matchedPuppiDeepflavTagLoose   ->Fill(offJet, weight);
+        hOffJet_matchedPuppiDeepflavTagLooseJet->Fill(hltJet, weight);
+      }
+      if(hltJet->DeepJet >= OnlineDeepFlavourCutPuppiMedium){
+        hOffJet_matchedPuppiDeepflavTagMedium   ->Fill(offJet, weight);
+        hOffJet_matchedPuppiDeepflavTagMediumJet->Fill(hltJet, weight);
+      }
+      if(hltJet->DeepJet >= OnlineDeepFlavourCutPuppiTight){
+        hOffJet_matchedPuppiDeepflavTagTight   ->Fill(offJet, weight);
+        hOffJet_matchedPuppiDeepflavTagTightJet->Fill(hltJet, weight);
       }
 
 
