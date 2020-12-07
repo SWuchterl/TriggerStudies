@@ -22,6 +22,7 @@ print labName
 # plotDirs = ["offJets_matched","offJets_matchedJet",    "offJets_matchedCalo",   "offJets_matchedCaloJet"]
 if options.puppi:
     plotDirs = ["offJets_matchedPuppi","offJets_matchedPuppiJet",
+                "offJetsPuppi","puppiJet",
                 "offJets_matchedPuppi_eta1","offJets_matchedPuppiJet_eta1",
                 "offJets_matchedPuppi_eta2","offJets_matchedPuppiJet_eta2",
                 "offJets_matchedPuppi_eta3","offJets_matchedPuppiJet_eta3"]
@@ -95,7 +96,10 @@ for v in ["tracks/ip3d_sig",
 
 
     for d in plotDirs:
-        plot(v,d,       binning=binning,doratio=1,rMin=0.5,rMax=1.5,logy=1,labels=labName,norm=options.norm)
+        if "puppiJet" == d and ("tracks/" in v or "btags/" in v):
+            continue
+        else:
+            plot(v,d,       binning=binning,doratio=1,rMin=0.5,rMax=1.5,logy=1,labels=labName,norm=options.norm)
 
     #doVarRatio(v,
     #      xTitle = v,
@@ -187,7 +191,10 @@ for v in [
         binning = 2
 
     for d in plotDirs:
-        plot(v,d,       binning=binning,doratio=1,rMin=0.5,rMax=1.5,logy=0,labels=labName, norm=options.norm)
+        if "puppiJet" == d and ("tracks/" in v or "btags/" in v):
+            continue
+        else:
+            plot(v,d,       binning=binning,doratio=1,rMin=0.5,rMax=1.5,logy=0,labels=labName, norm=options.norm)
 
 
 
@@ -220,7 +227,10 @@ for v in [
     # "trackSumJetEtRatio",
         ]:
     for d in plotDirs:
-        plot(v,d,       binning=1,doratio=1,rMin=0.5,rMax=1.5,logy=0,minY=0,labels=labName,norm=options.norm)
+        if "puppiJet" == d and ("tracks/" in v or "btags/" in v):
+            continue
+        else:
+            plot(v,d,       binning=1,doratio=1,rMin=0.5,rMax=1.5,logy=0,minY=0,labels=labName,norm=options.norm)
 
 #
 #
@@ -241,4 +251,7 @@ for v in [
         "m",
         ]:
     for d in plotDirs:
-        plot(v,d,       binning=1,doratio=1,rMin=0.5,rMax=1.5,logy=0,x_min = 0, x_max=15,labels=labName,norm=options.norm)
+        if "puppiJet" == d and ("tracks/" in v or "btags/" in v):
+            continue
+        else:
+            plot(v,d,       binning=1,doratio=1,rMin=0.5,rMax=1.5,logy=0,x_min = 0, x_max=15,labels=labName,norm=options.norm)

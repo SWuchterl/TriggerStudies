@@ -105,7 +105,7 @@ def drawText(text,textsize,xStart,yStart):
             otherLabel.append(ROOT.TLatex(xStart, yStartCurrent, '#scale['+str(0.7)+']{'+ot+'}'))
             otherLabel[-1].SetTextSize(textsize)
             otherLabel[-1].Draw("same")
-            yStartCurrent = yStart - 0.05
+            yStartCurrent = yStartCurrent - 0.05
 
     elif text:
         otherLabel = ROOT.TLatex(xStart, yStart, '#scale['+str(0.7)+']{'+text+'}')
