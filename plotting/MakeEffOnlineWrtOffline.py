@@ -49,19 +49,25 @@ vars = [
     #"matched_dRAll",
     ]
 
+# effRatios = [
+#     ("offJetsMedDeepFlav_matchedPFDeepCSV",  "offJetsMedDeepFlav_matchedPFJet", "PFDeepCSV"),
+#     ("offJetsMedDeepFlav_matchedPFCSV",      "offJetsMedDeepFlav_matchedPFJet", "PFCSV"),
+#     ("offJetsMedDeepFlav_matchedCaloDeepCSV","offJetsMedDeepFlav_matchedCaloJet", "CaloDeepCSV"),
+#     ("offJetsMedDeepFlav_matchedCaloCSV",    "offJetsMedDeepFlav_matchedCaloJet", "CaloCSV"),
+#     ("offJetsMedDeepCSV_matchedPFDeepCSV",   "offJetsMedDeepCSV_matchedPFJet",    "PFDeepCSV" ),
+#     ("offJetsMedDeepCSV_matchedPFCSV",       "offJetsMedDeepCSV_matchedPFJet",    "PFCSV" ),
+#     ("offJetsMedDeepCSV_matchedCaloCSV",     "offJetsMedDeepCSV_matchedCaloJet",  "CaloCSV" ),
+#     ("offJetsMedDeepCSV_matchedCaloDeepCSV", "offJetsMedDeepCSV_matchedCaloJet",  "CaloDeepCSV" ),
+#     ("offJetsMedDeepFlav_matchedPFDeepCSV",  "offJetsMedDeepFlav_matchedPFJet",   "PFDeepCSV_wrt_DeepFlav"),
+#     ("offJetsMedDeepFlav_matchedPFCSV",      "offJetsMedDeepFlav_matchedPFJet",   "PFCSV_wrt_DeepFlav"),
+#     ("offJetsMedDeepFlav_matchedCaloDeepCSV","offJetsMedDeepFlav_matchedCaloJet", "CaloDeepCSV_wrt_DeepFlav"),
+#     ("offJetsMedDeepFlav_matchedCaloCSV",    "offJetsMedDeepFlav_matchedCaloJet", "CaloCSV_wrt_DeepFlav"),
+#     ]
 effRatios = [
-    ("offJetsMedDeepFlav_matchedPFDeepCSV",  "offJetsMedDeepFlav_matchedPFJet", "PFDeepCSV"),
-    ("offJetsMedDeepFlav_matchedPFCSV",      "offJetsMedDeepFlav_matchedPFJet", "PFCSV"),
-    ("offJetsMedDeepFlav_matchedCaloDeepCSV","offJetsMedDeepFlav_matchedCaloJet", "CaloDeepCSV"),
-    ("offJetsMedDeepFlav_matchedCaloCSV",    "offJetsMedDeepFlav_matchedCaloJet", "CaloCSV"),
-    ("offJetsMedDeepCSV_matchedPFDeepCSV",   "offJetsMedDeepCSV_matchedPFJet",    "PFDeepCSV" ),
-    ("offJetsMedDeepCSV_matchedPFCSV",       "offJetsMedDeepCSV_matchedPFJet",    "PFCSV" ),
-    ("offJetsMedDeepCSV_matchedCaloCSV",     "offJetsMedDeepCSV_matchedCaloJet",  "CaloCSV" ),
-    ("offJetsMedDeepCSV_matchedCaloDeepCSV", "offJetsMedDeepCSV_matchedCaloJet",  "CaloDeepCSV" ),
-    ("offJetsMedDeepFlav_matchedPFDeepCSV",  "offJetsMedDeepFlav_matchedPFJet",   "PFDeepCSV_wrt_DeepFlav"),
-    ("offJetsMedDeepFlav_matchedPFCSV",      "offJetsMedDeepFlav_matchedPFJet",   "PFCSV_wrt_DeepFlav"),
-    ("offJetsMedDeepFlav_matchedCaloDeepCSV","offJetsMedDeepFlav_matchedCaloJet", "CaloDeepCSV_wrt_DeepFlav"),
-    ("offJetsMedDeepFlav_matchedCaloCSV",    "offJetsMedDeepFlav_matchedCaloJet", "CaloCSV_wrt_DeepFlav"),
+    # ("offJetsMedDeepFlav_matchedPFDeepCSV",  "offJetsMedDeepFlav_matchedPFJet", "PFDeepCSV"),
+    ("offJetsMedDeepCSV_matchedPuppiDeepCSV",   "offJetsMedDeepCSV_matchedPuppiJet",    "PuppiDeepCSV" ),
+    # ("offJetsMedDeepFlav_matchedPFDeepCSV",  "offJetsMedDeepFlav_matchedPFJet",   "PFDeepCSV_wrt_DeepFlav"),
+    # ("offJetsMedDeepFlav_matchedPFCSV",      "offJetsMedDeepFlav_matchedPFJet",   "PFCSV_wrt_DeepFlav"),
     ]
 
 
