@@ -45,6 +45,33 @@ namespace TriggerStudies {
     Int_t eventAOD     =  0;
     Int_t BitTrigger[1000];
 
+    float qcdWeightPU140 = 0.;
+    float qcdWeightPU200 = 0.;
+
+    float L1_HT_pt = 0.;
+    float L1_HT_phi = 0.;
+    float L1_HT_sumEt = 0.;
+
+    float HLT_HT_2p4_pt = 0.;
+    float HLT_HT_2p4_phi = 0.;
+    float HLT_HT_2p4_sumEt = 0.;
+
+    Int_t nGenJets=0;
+    float genJet_pt[1000];
+    float genJet_eta[1000];
+    float genJet_phi[1000];
+    float genJet_mass[1000];
+    std::vector<TLorentzVector> L1_GenJets;
+
+    Int_t nL1_PuppiJets=0;
+    float L1_PuppiJets_pt[1000];
+    float L1_PuppiJets_eta[1000];
+    float L1_PuppiJets_phi[1000];
+    float L1_PuppiJets_m[1000];
+    std::vector<TLorentzVector> L1_PuppiJets;
+
+    float genHT=0.;
+
     nTupleAnalysis::jetData* offTreeJets;
     std::vector<nTupleAnalysis::jetPtr> offJets;
 
@@ -53,7 +80,7 @@ namespace TriggerStudies {
 
     nTupleAnalysis::jetData* caloTreeJets;
     std::vector<nTupleAnalysis::jetPtr> caloJets;
-    
+
     nTupleAnalysis::jetData* puppiTreeJets;
     std::vector<nTupleAnalysis::jetPtr> puppiJets;
 

@@ -122,6 +122,29 @@ eventData::eventData(TChain* _treeRAW, TChain* _treeAOD, bool mc, std::string y,
 
   connectBranchArr(true, treeRAW, "BitTrigger", BitTrigger,  "nBitTrigger",  "I");
 
+  inputBranch(treeRAW, "qcdWeightPU140",           qcdWeightPU140);
+  inputBranch(treeRAW, "qcdWeightPU200",           qcdWeightPU200);
+
+  inputBranch(treeRAW, "L1_HT_pt", L1_HT_pt);
+  inputBranch(treeRAW, "L1_HT_phi", L1_HT_phi);
+  inputBranch(treeRAW, "L1_HT_sumEt", L1_HT_sumEt);
+
+  inputBranch(treeRAW, "HLT_HT_2p4_pt", HLT_HT_2p4_pt);
+  inputBranch(treeRAW, "HLT_HT_2p4_phi", HLT_HT_2p4_phi);
+  inputBranch(treeRAW, "HLT_HT_2p4_sumEt", HLT_HT_2p4_sumEt);
+
+  inputBranch(treeRAW, "nGenJets", nGenJets);
+  connectBranchArr(true, treeRAW, "GenJet_pT", genJet_pt,  "GenJet_pT",  "F");
+  connectBranchArr(true, treeRAW, "GenJet_eta", genJet_eta,  "GenJet_eta",  "F");
+  connectBranchArr(true, treeRAW, "GenJet_phi", genJet_phi,  "GenJet_phi",  "F");
+  connectBranchArr(true, treeRAW, "GenJet_mass", genJet_mass,  "GenJet_mass",  "F");
+
+  inputBranch(treeRAW, "nL1_PuppiJets", nL1_PuppiJets);
+  connectBranchArr(true, treeRAW, "L1_PuppiJets_pt", L1_PuppiJets_pt,  "L1_PuppiJets_pt",  "F");
+  connectBranchArr(true, treeRAW, "L1_PuppiJets_eta", L1_PuppiJets_eta,  "L1_PuppiJets_eta",  "F");
+  connectBranchArr(true, treeRAW, "L1_PuppiJets_phi", L1_PuppiJets_phi,  "L1_PuppiJets_phi",  "F");
+  connectBranchArr(true, treeRAW, "L1_PuppiJets_m", L1_PuppiJets_m,  "L1_PuppiJets_m",  "F");
+
   if(doOffline){
     inputBranch(treeAOD, "Run",             runAOD);
     //inputBranch(tree, "luminosityBlock", lumiBlock);
@@ -133,10 +156,11 @@ eventData::eventData(TChain* _treeRAW, TChain* _treeAOD, bool mc, std::string y,
   if(jetSFName == "2018") jetSFName = "deepcsv2018";
 
   if(doOffline)  offTreeJets  = new nTupleAnalysis::jetData( "Jet",  treeRAW, true, isMC,  jetDetailLevel, "",      jetSFName );
-  pfTreeJets   = new nTupleAnalysis::jetData( "Jet",  treeRAW, true, false, jetDetailLevel, "PFJet."       );
+  // pfTreeJets   = new nTupleAnalysis::jetData( "Jet",  treeRAW, true, false, jetDetailLevel, "PFJet."       );
+  pfTreeJets   = new nTupleAnalysis::jetData( "Jet",  treeRAW, true, isMC, jetDetailLevel, "PuppiJet."       );
 
   if(doCaloJets) caloTreeJets = new nTupleAnalysis::jetData( "Jet",  treeRAW, true, false, jetDetailLevel, "CaloJet."     );
-  if(doPuppiJets) puppiTreeJets = new nTupleAnalysis::jetData( "Jet",  treeRAW, true, false, jetDetailLevel, "PuppiJet."     );
+  if(doPuppiJets) puppiTreeJets = new nTupleAnalysis::jetData( "Jet",  treeRAW, true, isMC, jetDetailLevel, "PuppiJet."     );
 
   //treeMuons    = new nTupleAnalysis::muonData("PFMuon",     treeRAW);
   //treeElecs    = new nTupleAnalysis::elecData("PFElectron", treeRAW);
