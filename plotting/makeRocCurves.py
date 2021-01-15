@@ -308,7 +308,7 @@ def main():
         puppi_deepjet_roc_eta3   = makeRocPlot("Puppi_deepjet_eta3", "DeepJet_l", bkg="matchedPuppiJet_L_eta3",sig="matchedPuppiJet_B_eta3",dir="offJets")
         puppi_probb_roc          = makeRocPlot("Puppi_probb",        "probB",     bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets")
 
-        print getWorkingPoint("DeepJet_l",   bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets",varNorm="DeepJet_l")
+        # print getWorkingPoint("DeepJet_l",   bkg="matchedPuppiJet_L",sig="matchedPuppiJet_B",dir="offJets",varNorm="DeepJet_l")
 
 
     for i, rocType in enumerate(["Rej","Eff"]):

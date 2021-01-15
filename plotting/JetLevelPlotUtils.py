@@ -31,7 +31,7 @@ def getCMSText(xStart,yStart,subtext = "Work in Progress", lumiText="",xLumiStar
     textsize=0.045
 
     firstline = '#scale['+str(cmsScale)+']{#bf{CMS}}'
-    additionaltext = ""
+    additionaltext = "Sim"
     if additionaltext == "Sim":
         firstline += " #it{Simulation}"
     elif additionaltext == "Supp":
@@ -92,6 +92,7 @@ def getHist(inFile,dir,var,binning,norm=False,color=ROOT.kBlack):
        hist.Scale(1./hist.Integral())
 
     hist.SetLineColor(color)
+    hist.SetLineWidth(1)
     hist.SetMarkerColor(color)
     hist.Sumw2()
 
@@ -155,12 +156,15 @@ def makeEff(var,dirs,inFile,binning,bayesRatio=1,histForXBarycenterCalc=None):
 
 
 
-def drawComp(name,inputHists,yTitle,xTitle,outDir,otherText="",setLogy=1,yMax= 1,leg="",xMax=1,xMin = -0.2,yLeg=0.76,xLeg=0.2,xStartOther=0.5, yStartOther=0.9, doFit = False,cmsText="Preliminary", lumiText="",xLumiStart=0.7):
+def drawComp(name,inputHists,yTitle,xTitle,outDir,otherText="",setLogy=0,yMax= 1,leg="",xMax=1,xMin = -0.2,yLeg=0.76,xLeg=0.2,xStartOther=0.5, yStartOther=0.9, doFit = False,cmsText="Preliminary", lumiText="",xLumiStart=0.7, drawOpt=""):
 
 
 
 
     canvas = makeCanvas(name, name)#, width=800, height=600)
+
+    # if setLogy:
+    #     canvas.SetLogy(1)
 
     if isinstance(inputHists[0][0],ROOT.TGraphAsymmErrors):
         ratio_axis = inputHists[0][0].GetHistogram()
@@ -170,32 +174,42 @@ def drawComp(name,inputHists,yTitle,xTitle,outDir,otherText="",setLogy=1,yMax= 1
     ratio_axis.GetXaxis().SetTitle(xTitle)
     ratio_axis.GetYaxis().SetNdivisions(507)
     yMin = 0
+    if setLogy:
+        yMin=0.1
 
     ratio_axis.GetYaxis().SetRangeUser(yMin, yMax)
-    print xMin,"to",xMax
-    ratio_axis.GetXaxis().SetRangeUser(xMin, xMax)
+    if setLogy:
+        ROOT.gPad.SetLogy(1)
+    else:
+        ROOT.gPad.SetLogy(0)
+    if not xMin==-0.2 and not xMax==-0.2:
+        # print xMin,"to",xMax
+        ratio_axis.GetXaxis().SetRangeUser(xMin, xMax)
     ratio_axis.Draw("axis")
 
 
 
     for hInfoIndx, hInfo  in enumerate(inputHists):
         #hInfo[0].GetYaxis().SetRangeUser(yMin, yMax)
-        #hInfo[0].GetXaxis().SetRangeUser(xMin, xMax)
+        if not xMin==-0.2 and not xMax==-0.2:
+            hInfo[0].GetXaxis().SetRangeUser(xMin, xMax)
         hInfo[0].SetLineColor  (hInfo[2])
         hInfo[0].SetMarkerColor(hInfo[2])
         hInfo[0].SetMarkerSize(0.5)
+        # hInfo[0].SetMarkerSize(0.3)
         if len(hInfo) > 3:
             hInfo[0].SetMarkerStyle(hInfo[3])
             hInfo[0].SetFillStyle(hInfo[3])
         #hInfo[0].SetMarkerStyle(0)
         if hInfoIndx:
             if isinstance(inputHists[0][0],ROOT.TGraphAsymmErrors):
-                hInfo[0].Draw("PE same")
+                hInfo[0].Draw("PEL same")
             else:
-                hInfo[0].Draw("same")
+                # hInfo[0].Draw("same")
+                hInfo[0].Draw("same "+drawOpt)
         else:
             if isinstance(inputHists[0][0],ROOT.TGraphAsymmErrors):
-                hInfo[0].Draw("PE")
+                hInfo[0].Draw("PEL")
 
 
                 if doFit:
@@ -223,7 +237,8 @@ def drawComp(name,inputHists,yTitle,xTitle,outDir,otherText="",setLogy=1,yMax= 1
 
 
             else:
-                hInfo[0].Draw("same")
+                # hInfo[0].Draw("same")
+                hInfo[0].Draw("same "+drawOpt)
 
                 if doFit:
                     xAve = (ratio_axis.GetXaxis().GetXmin() + ratio_axis.GetXaxis().GetXmax()) /2
@@ -262,8 +277,9 @@ def drawComp(name,inputHists,yTitle,xTitle,outDir,otherText="",setLogy=1,yMax= 1
         legInfo = []
         yWidth = 0
         for hInfo in inputHists:
-            yWidth += 0.06
-            print hInfo[1]
+            # yWidth += 0.06
+            yWidth += 0.04
+            # print hInfo[1]
             legInfo.append((hInfo[0],"#scale[0.7]]{"+hInfo[1]+"}","LP"))
         #leg = getLegend([(effHist,"#scale[0.7]]{Data}","PE"),(effHistMC,"#scale[0.7]{t#bar{t} MC}","PE")],  xStart=0.2, xWidth=0.3, yStart=0.6, yWidth=0.16)
         leg = getLegend(legInfo,  xStart=xLeg, xWidth=0.3, yStart=yLeg-yWidth, yWidth=yWidth)
@@ -318,6 +334,7 @@ def drawComp(name,inputHists,yTitle,xTitle,outDir,otherText="",setLogy=1,yMax= 1
 
     if otherText:
         labels = drawText(otherText,textsize=0.05,xStart=xStartOther,yStart=yStartOther)
+
 
 
     canvas.SaveAs(outDir+"/"+name+".png")
@@ -1060,7 +1077,8 @@ def makeInverseTurnOnAll(name,var,dir,inFile1,name1,inFile2,name2,binning, outDi
         yMin = 0.6
         yMax = 1.0
         opLine = ROOT.TLine(xValue,yMin,xValue,yMax)
-        opLine.SetLineWidth(3)
+        # opLine.SetLineWidth(3)
+        opLine.SetLineWidth(2)
         opLine.SetLineStyle(ROOT.kDashed)
         opLine.Draw("same")
 
