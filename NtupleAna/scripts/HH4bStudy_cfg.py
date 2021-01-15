@@ -18,9 +18,10 @@ parser.add_option( '--inputAOD',                dest="inputAOD",         default
 parser.add_option( '--inputRAW',                dest="inputRAW",         default="TriggerStudies/fileLists/data2016H.txt", help="Input file(s). If it ends in .txt, will treat it as a list of input files.")
 parser.add_option('-o', '--outputBase',           dest="outputBase",    default="/uscms/home/bryantp/nobackup/TriggerStudies/", help="Base path for storing output histograms and picoAOD")
 parser.add_option('-n', '--nevents',              dest="nevents",       default="-1", help="Number of events to process. Default -1 for no limit.")
+parser.add_option('-e', '--eta',              dest="eta",       default="2.4", help="Number of events to process. Default -1 for no limit.")
 parser.add_option(      '--skipEvents',        dest="skipEvents", default="0", help="")
 parser.add_option(      '--histFile',             dest="histFile",      default="hists.root", help="name of ouptut histogram file")
-parser.add_option('--triggers', dest="trigger_list", default="", action='append', type='string') 
+parser.add_option('--triggers', dest="trigger_list", default="", action='append', type='string')
 
 o, a = parser.parse_args()
 
@@ -93,5 +94,5 @@ process.HH4bAnalyzer = cms.PSet(
     debug   = cms.bool(o.debug),
     fileNamesAOD   = cms.vstring(fileNamesAOD),
     skipEvents = cms.int32(int(o.skipEvents)),
+    etaCut = cms.double(float(o.eta)),
 )
-

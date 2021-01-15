@@ -48,13 +48,14 @@ int main(int argc, char * argv[]){
   const edm::ParameterSet& parameters = process.getParameter<edm::ParameterSet>("HH4bAnalyzer");
   bool debug = parameters.getParameter<bool>("debug");
   int skipEvents = parameters.getParameter<int>("skipEvents");
+  double etaCut = parameters.getParameter<double>("etaCut");
   std::vector<std::string> filesAOD = parameters.getParameter<std::vector<std::string> >("fileNamesAOD");
 
   //NANOAOD Input source
-  fwlite::InputSource inputHandler(process); 
+  fwlite::InputSource inputHandler(process);
 
   //
-  //  Add RAW Files 
+  //  Add RAW Files
   //
   TChain* treeRAW     = new TChain("btagana/ttree");
   for(unsigned int iFile=0; iFile<inputHandler.files().size(); ++iFile){
@@ -64,9 +65,9 @@ int main(int argc, char * argv[]){
     if(debug) std::cout<<"Added to TChain"<<std::endl;
   }
 
-  
+
   //
-  //  Add AOD Files 
+  //  Add AOD Files
   //
   TChain* treeAOD     = new TChain("btagana/ttree");
   for(unsigned int iFile=0; iFile<filesAOD.size(); ++iFile){
@@ -75,24 +76,24 @@ int main(int argc, char * argv[]){
     if(e!=1){ std::cout << "ERROR" << std::endl; return 1;}
     if(debug) std::cout<<"Added to TChain"<<std::endl;
   }
-  
+
 
   //Histogram output
   fwlite::OutputFiles histOutput(process);
   std::cout << "Event Loop Histograms: " << histOutput.file() << std::endl;
   fwlite::TFileService fsh = fwlite::TFileService(histOutput.file());
-    
+
   //
   // Define analysis and run event loop
   //
   std::cout << "Initialize analysis: ";
-  
+
   std::cout << "HH4bAnalysis " << std::endl;
-  HH4bAnalysis a = HH4bAnalysis(treeRAW, treeAOD, fsh, debug);
+  HH4bAnalysis a = HH4bAnalysis(treeRAW, fsh, debug);
 
   int maxEvents = inputHandler.maxEvents();
-  a.eventLoop(maxEvents, skipEvents);
-  
+  a.eventLoop(maxEvents, skipEvents, etaCut);
+
   std::cout << std::endl;
   std::cout << "Done Event Loop" << std::endl;
   return 0;
